@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software in your research, please cite it using the following metadata"
+title: "ImageIO"
+version: "2.37.1"
+date-released: "2025-10-28"
+authors:
+  - name: "ImageIO contributors"
+maintainers:
+  - family-names: "Wallkotter"
+    given-names: "Sebastian"
+    email: "sebastian@wallkoetter.net"
+  - family-names: "Klein"
+    given-names: "Almar"
+    email: "almar.klein@gmail.com"
+type: software
+repository-code: "https://github.com/imageio/imageio"
+license: BSD-2-Clause
+keywords:
+  - "image"
+  - "video"
+  - "scientific"
+  - "volumetric data"
+abstract: "Read and write images and video across all major formats. Supports scientific and volumetric data."

@@ -1,0 +1,58 @@
+name: Test CITATION.cff Update (Development)
+
+on:
+  push:
+    branches:
+      - citation
+    paths:
+      - '.github/workflows/**'
+      - 'CITATION.cff'
+  pull_request:
+    branches:
+      - citation
+    paths:
+      - '.github/workflows/**'
+      - 'CITATION.cff'
+  workflow_dispatch:
+    inputs:
+      test_version:
+        description: 'Test version number'
+        required: true
+        default: '2.37.1'
+        type: string
+      test_date:
+        description: 'Test release date (YYYY-MM-DD)'
+        required: true
+        default: '2025-10-28'
+        type: string
+
+jobs:
+  test-citation-update-dev:
+    name: Test Citation Update in Development
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Create backup
+        run: cp CITATION.cff CITATION.cff.backup
+      
+      - name: Test Update CITATION.cff
+        run: |
+          # Update version and date in CITATION.cff using input parameters
+          if [ ! -z "${{ inputs.test_version }}" ]; then
+            sed -i "s/^version: .*/version: \"${{ inputs.test_version }}\"/" CITATION.cff
+          fi
+          if [ ! -z "${{ inputs.test_date }}" ]; then
+            sed -i "s/^date-released: .*/date-released: \"${{ inputs.test_date }}\"/" CITATION.cff
+          fi
+      
+      - name: Show diff
+        run: |
+          echo "[DEV TEST] Changes that would be made:"
+          diff CITATION.cff.backup CITATION.cff || true
+      
+      - name: Restore original (Test Only)
+        run: mv CITATION.cff.backup CITATION.cff
